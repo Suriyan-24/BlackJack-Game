@@ -1,124 +1,87 @@
-card=[[" ___ "], ["|", "N", "  |"], ["| ", "#", " |"], ["|__", "N", "|"]]
-symbols_list=["♠", "♥", "♦", "♣"]
-denotion_list=["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
-mystery_card=[[" ___ "], ["|", " ", "  |"], ["| ", "⍰", " |"], ["|__", " ", "|"]]
-
-user_print_list=[]
-computer_print_list=[]
-
 import random
+import numpy as np
+
+# Mapping card names to values
+card_values = {
+    "A": 1,
+    "2": 2, "3": 3, "4": 4, "5": 5,
+    "6": 6, "7": 7, "8": 8, "9": 9,
+    "10": 10, "J": 10, "Q": 10, "K": 10
+}
+
+# Deck of cards
+symbols_list = ["♠", "♥", "♦", "♣"]
+denotion_list = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+mystery_card = [" ___ ", "|   |", "| ⍰ |", "|__ |"]
+
+# Function to print a styled card
+def print_card(card):
+    for row in card:
+        print(row)
+
+# Create a single card as 4 lines of string
+def create_card(denotion, symbol):
+    top = " ___ "
+    middle1 = f"|{denotion:<2} |"
+    middle2 = f"| {symbol} |"
+    bottom = f"|__{denotion:>2}|"
+    return [top, middle1, middle2, bottom]
 
 def user_card(round):
+    symbol_1, symbol_2 = random.choice(symbols_list), random.choice(symbols_list)
+    denotion_1, denotion_2 = random.choice(denotion_list), random.choice(denotion_list)
 
-      symbol=""
-      symbol_1=""
-      symbol_2=""
-      symbol=""
-      denotion=""
-      denotion_1=""
-      denotion_2=""
+    card1 = create_card(denotion_1, symbol_1)
+    card2 = create_card(denotion_2, symbol_2)
 
-      symbol_1=random.choice(symbols_list)
-      symbol_2=random.choice(symbols_list)
-      symbol=random.choice(symbols_list)
-      denotion_1=random.choice(denotion_list)
-      denotion_2=random.choice(denotion_list)
-      denotion=random.choice(denotion_list)
+    if round == 1:
+        print("Your cards are:")
+        for i in range(4):
+            print(card1[i], card2[i])
+        return [denotion_1, denotion_2]
 
-      user_card_1=[[" ___ "], ["|", "N", "  |"], ["| ", "#", " |"], ["|__", "N", "|"]]
-      user_card_2=[[" ___ "], ["|", "N", "  |"], ["| ", "#", " |"], ["|__", "N", "|"]]
-      user_card=[[" ___ "], ["|", "N", "  |"], ["| ", "#", " |"], ["|__", "N", "|"]]
-      
-      user_card_1[1][1]=user_card_1[3][1]=denotion_1
-      user_card_1[2][1]=symbol_1
-      user_card_2[1][1]=user_card_2[3][1]=denotion_2
-      user_card_2[2][1]=symbol_2
-      user_card[1][1]=user_card[3][1]=denotion
-      user_card[2][1]=symbol
-      
-      if round==1:
-
-            print("Your cards are:")
-            
-            for list in user_card_1:
-                  print("\n",end="")
-                  for element in list:
-                        print(element,end="")
-
-            for list in user_card_2:
-                  print("\n",end="")
-                  for element in list:
-                        print(element,end="")
-
-            user_value=[denotion_1, denotion_2]
-            return user_value
-
-      elif round==2:
-
-            print("\nYour card is:")
-
-            for list in user_card:
-                  print("\n",end="")
-                  for element in list:
-                        print(element,end="")
-
-            user_value=denotion
-            return user_value
+    elif round == 2:
+        denotion = random.choice(denotion_list)
+        symbol = random.choice(symbols_list)
+        card = create_card(denotion, symbol)
+        print("\nYour card is:")
+        print_card(card)
+        return denotion
 
 def computer_card(round):
+    symbol_1, symbol_2 = random.choice(symbols_list), random.choice(symbols_list)
+    denotion_1, denotion_2 = random.choice(denotion_list), random.choice(denotion_list)
 
-      symbol=""
-      symbol_1=""
-      symbol_2=""
-      denotion=""
-      denotion_1=""
-      denotion_2=""
+    card1 = create_card(denotion_1, symbol_1)
+    card2 = create_card(denotion_2, symbol_2)
 
-      symbol_1=random.choice(symbols_list)
-      symbol_2=random.choice(symbols_list)
-      denotion_1=random.choice(denotion_list)
-      denotion_2=random.choice(denotion_list)
-      denotion=random.choice(denotion_list)
+    if round == 1:
+        print("\n\nComputer's cards are:")
+        for i in range(4):
+            print(card1[i], mystery_card[i])
+        return [denotion_1, denotion_2]
 
-      computer_card_1=[[" ___ "], ["|", "N", "  |"], ["| ", "#", " |"], ["|__", "N", "|"]]
-      computer_card_2=[[" ___ "], ["|", "N", "  |"], ["| ", "#", " |"], ["|__", "N", "|"]]
-      computer_card=[[" ___ "], ["|", "N", "  |"], ["| ", "#", " |"], ["|__", "N", "|"]]
-      mystery_card=[[" ___ "], ["|", " ", "  |"], ["| ", "⍰", " |"], ["|__", " ", "|"]]
-      computer_card_1[1][1]=computer_card_1[3][1]=denotion_1
-      computer_card_1[2][1]=symbol_1
-      computer_card_2[1][1]=computer_card_2[3][1]=denotion_2
-      computer_card_2[2][1]=symbol_2
-      computer_card[1][1]=computer_card[3][1]=denotion
-      computer_card[2][1]=symbol
+    elif round == 2:
+        denotion = random.choice(denotion_list)
+        symbol = random.choice(symbols_list)
+        card = create_card(denotion, symbol)
+        print("\n\nComputer's card is:")
+        print_card(card)
+        return denotion
 
-      if round==1:
+def convert_to_values(cards):
+    numeric = []
+    for card in cards:
+        if card in ["K", "Q", "J"]:
+            numeric.append(10)
+        elif card == "A":
+            numeric.append(1)
+        else:
+            numeric.append(int(card))
+    return numeric
 
-            print("\n\nComputer's cards are:")
-
-            for list in computer_card_1:
-                  print("\n",end="")
-                  for element in list:
-                        print(element,end="")
-
-            for list in mystery_card:
-                  print("\n",end="")
-                  for element in list:
-                        print(element,end="")
-
-            computer_value=[denotion_1, denotion_2]
-            return computer_value
-
-      elif round==2:
-
-            print("\n\nComputer's card is:")
-
-            for list in mystery_card:
-                  print("\n",end="")
-                  for element in list:
-                        print(element,end="")
-
-            computer_value=denotion
-            return computer_value
+def calculate_total(cards):
+    return np.sum(np.array(convert_to_values(cards)))
 
 print("Welcome to the Black Jack game.")
 print("""
@@ -126,102 +89,63 @@ Instructions:
 ✯ When the game starts, you will be given two random cards.
 ✯ The computer will be assigned to random cards, one of which will not be revealed.
 ✯ You may choose to obtain another card, where the computer will also be assigned another card.
-✯ King, Queen or Jack equals 10. 
+✯ King, Queen or Jack equals 10.
 ✯ Whomsoever reaches the number closest to 21 wins.
 ✯ If you reach a number greater than 21, you lose.""")
 
-print("Click enter to start the game.")
-input()
+input("Click enter to start the game.")
 
-continue_game=True
-another_card=False
-extra_user_value=extra_computer_value=0
+continue_game = True
 
-while continue_game==True:
+while continue_game:
+    user_print_list = []
+    computer_print_list = []
 
-      user_value=0
-      computer_value=0
-      
-      user_values=user_card(1)
-      computer_values=computer_card(1)
+    user_values = user_card(1)
+    computer_values = computer_card(1)
 
-      for element in user_values:
-            if element in ["K", "J", "Q"]:
-                  element=10
-            elif element=="A":
-                  element=1
-            user_print_list.append(element)
-            user_value+=int(element)
+    user_print_list.extend(user_values)
+    computer_print_list.extend(computer_values)
 
-      for element in computer_values:
-            if element in ["K", "J", "Q"]:
-                  element=10
-            elif element=="A":
-                  element=1
-            computer_print_list.append(element)
-            computer_value+=int(element)
+    user_value = calculate_total(user_values)
+    computer_value = calculate_total(computer_values)
 
-      choice_1=input("\nTry getting another card? (y/n): ")
-      if choice_1=="y":
-            another_card=True
-      elif choice_1=="n":
-            another_card=False
+    while True:
+        choice = input("\nTry getting another card? (y/n): ").lower()
+        if choice == 'y':
+            extra_user_value = user_card(2)
+            extra_computer_value = computer_card(2)
 
-      while another_card==True:
+            user_print_list.extend([extra_user_value])
+            computer_print_list.extend([extra_computer_value])
 
-            extra_user_value=user_card(2)
-            extra_computer_value=computer_card(2)
+            user_value = calculate_total(user_print_list)
+            computer_value = calculate_total(computer_print_list)
 
-            if extra_user_value in ["K", "J", "Q"]:
-                  extra_user_value=10
-            elif extra_user_value=="A":
-                  extra_user_value=1
-            user_print_list.append(extra_user_value)
-            user_value+=int(extra_user_value)
+            if user_value >= 21 or computer_value >= 21:
+                break
+        else:
+            break
 
-            if extra_computer_value in ["K", "J", "Q"]:
-                  extra_computer_value=10
-            elif extra_computer_value=="A":
-                  extra_computer_value=1
-            computer_print_list.append(extra_computer_value)
-            computer_value+=int(extra_computer_value)
+    print("\nYour card values are:", user_print_list)
+    print("Computer's card values are:", computer_print_list)
 
-            if user_value>=21 or computer_value>=21:
-                  another_card=False
-            else:
-                  choice_1=input("\n\nTry getting another card? (y/n): ")
-                  if choice_1=="y":
-                        another_card=True
-                  elif choice_1=="n":
-                        another_card=False
+    print("\nThe total value you've got:", user_value)
+    print("The total value computer's got:", computer_value)
 
-      print("\n")
-
-      print("Your card values are:", user_print_list)
-      print("Computer's card values are:", computer_print_list)
-
-
-      print("\n")
-      print("The total value you've got: ", user_value)
-      print("The total value computer's got: ", computer_value)
-      print("\n")
-      
-      if user_value<=21 and computer_value>21:
+    if user_value <= 21 and computer_value > 21:
+        print("You win!")
+    elif computer_value <= 21 and user_value > 21:
+        print("Computer wins!")
+    elif user_value == computer_value:
+        print("It is a draw!")
+    elif user_value <= 21 and computer_value <= 21:
+        if user_value > computer_value:
             print("You win!")
-      elif computer_value<=21 and user_value>21:
+        else:
             print("Computer wins!")
-      elif user_value==computer_value:
-            print("It is a draw!")
-      elif user_value<=21 and computer_value<=21:
-            if user_value>computer_value:
-                  print("You win!")
-            elif computer_value>user_value:
-                  print("Computer wins!")
 
-      print("Good game.")
-      
-      choice_2=input("\nPlay another game? (y/n): ")
-      if choice_2=="y":
-            continue_game=True
-      elif choice_2=="n":
-            continue_game=False
+    choice = input("\nPlay another game? (y/n): ").lower()
+    continue_game = (choice == 'y')
+
+print("Thanks for playing! Goodbye!")
